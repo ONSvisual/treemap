@@ -1,7 +1,10 @@
 # Treemap
 Templated version of treemap
 
+![alt text](https://user-images.githubusercontent.com/11721913/49382059-4fc8df00-f70d-11e8-8b48-3ae3c2ca0d69.png)
+
 ##[Treemap](https://onsvisual.github.io/treemap/treemap/index.html)
+
 ----
 
 ### Data file
