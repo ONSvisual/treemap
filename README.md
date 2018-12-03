@@ -1,13 +1,9 @@
 # Treemap
-Templated version of treemap
+[Templated version of treemap](https://onsvisual.github.io/treemap/treemap/index.html)
 
 ![alt text](https://user-images.githubusercontent.com/11721913/49382059-4fc8df00-f70d-11e8-8b48-3ae3c2ca0d69.png)
 
-##[Treemap](https://onsvisual.github.io/treemap/treemap/index.html)
-
-----
-
-### Data file
+## Data file
 Save your data as a `.csv` file in the following format
 
 | id     | parentId | name                         | size  | realsize | percent |
@@ -21,25 +17,25 @@ Save your data as a `.csv` file in the following format
 | c1_2_1 | c1_2     | Coffee                       | 0.9   | 0.9 | null |
 | c1_2_2 | c1_2     | Tea                          | 0.5   | 0.5 | null |
 
-#### id
+```id```
 Is a unique id for each item. It is hierarchical in format.
 
-#### parentId
+```parentId```
 Is the unique id of the parent of each item. 
 
-#### name
+```name```
 The name of each item
 
-#### size
+```size```
 The value of each item. The size of each parent must equal the sum of it's children, the size of each grandparent must be the sum of the parents..... i.e the unrounded values
 
-#### realsize
+```realsize```
 The value of each item that you wish to be displayed on the treemap. i.e rounded values
 
-#### percent    
+```percent```
 The percentage of the total of each item. 
 
-### Config
+## Config
 
 Edit the `config.json` with your favourite text editor.
 
