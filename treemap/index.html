@@ -17,7 +17,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="../lib/styles.css" media="screen">
+	  <link rel="stylesheet" href="../lib/styles.css" media="screen">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -25,7 +26,7 @@ body{
 }
 
 .chart-title{
-	font-weight: 600;
+	font-weight: 700;
 	font-size: 16px;
 }
 
@@ -41,7 +42,7 @@ text {
 	font-weight: 700;
 }
 
-	
+
 .grandparent text {
   /*font-weight: bold;*/
   fill: #606060;
@@ -82,49 +83,62 @@ rect.parent,
 }
 
 .children rect.parent {
-  fill: #bbb;
-  fill-opacity: .2;
+  fill: #eaeaea;
+  fill-opacity: 0.01;
 }
 
 .children:hover rect.child {
-  fill: #bbb;
+  fill: #eaeaea;
 }
 
 .child:hover {
-  fill: #bbb;
+  fill: #eaeaea;
 }
 
-*[code*=c1_], *[code*=c7_], *[code*=c13_]{
-	fill:#0f8243;
+.depth text{
+	fill:white;
 }
 
-*[code*=c2_], *[code*=c8_]{
-	 fill:#0f8243;
+.children:hover text{
+  fill:#323123;
 }
 
-*[code*=c3_], *[code*=c9_]{
-	fill:#266D4A;
+.depth g:not(.children):hover text{
+  fill:#323123;
 }
 
-*[code*=c4_], *[code*=c10_]{
-	fill:#0075A3;
+/* *[code*=c]{
+  fill:#008080;
+} */
+
+*[level="1"]{
+  fill:#008080;
 }
 
-*[code*=c5_], *[code*=c11_]{
-	fill:#A8BD3A;
+*[level="2"]{
+  fill:#008080;
 }
 
-*[code*=c6_], *[code*=c12_] {
-	fill:#234D70;
-	/*fill:#766faf;*/
+*[level="3"]{
+  fill:#1e6e8a;
+}
+
+*[level="4"]{
+  fill:#235b94;
+}
+
+*[level="5"]{
+  fill:#1d489d;
+}
+
+*[level="5"]{
+  fill:#0034a6;
 }
 
 .hoveredOver {
 	fill:#bbb!important;
 }
-.depth text{
-	fill:white;
-}
+
 
 #blurb{
 	height:80px;
@@ -220,7 +234,7 @@ rect.parent,
 }
 
 
- 
+
 /*  SELECT DROPBOX END */
 .btnDiv{
 		/*line-height:9em;
@@ -255,7 +269,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <text id ="txt2"></text>
     <text id ="txt3"></text>
 </div>
-    
+
 <div class="btnDiv ">
     <button type="button" id="topBtn" class="nav btn btn-ons" style="visibility:hidden">
       <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Back to top
@@ -292,34 +306,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	function getSizes() {
 		var threshold_md = 788;
 	    var threshold_sm = dvc.optional.mobileBreakpoint;
-	  
+
 		//set variables for chart dimensions dependent on width of #graphic
-		if (parseInt(graphic.style("width")) < threshold_sm) {     	
-				 margin = {	top: 	dvc.optional.margin_sm[0], 
-							right: 	dvc.optional.margin_sm[1], 
+		if (parseInt(graphic.style("width")) < threshold_sm) {
+				 margin = {	top: 	dvc.optional.margin_sm[0],
+							right: 	dvc.optional.margin_sm[1],
 							bottom: dvc.optional.margin_sm[2],
 							left: 	dvc.optional.margin_sm[3]
 							};
 				 width = parseInt(graphic.style("width")) - margin.left - margin.right;
 				 height = Math.ceil((width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
 				}
-				
-		else if (parseInt(graphic.style("width")) < threshold_md){ 
+
+		else if (parseInt(graphic.style("width")) < threshold_md){
 				 margin = {	top: 	dvc.optional.margin_md[0],
 							right: 	dvc.optional.margin_md[1],
 							bottom: dvc.optional.margin_md[2],
 							left: 	dvc.optional.margin_md[3]
-							};		 
+							};
 				 width = parseInt(graphic.style("width")) - margin.left - margin.right;
 				 height = Math.ceil((width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
 				}
-				
-		else {   
+
+		else {
 				 margin = {	top: 	dvc.optional.margin_lg[0],
 							right: 	dvc.optional.margin_lg[1],
 							bottom: dvc.optional.margin_lg[2],
 							left: 	dvc.optional.margin_lg[3]
-							};		
+							};
 				 width = parseInt(graphic.style("width")) - margin.left - margin.right;
 				 height = Math.ceil((width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
 		}
@@ -332,29 +346,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }// end getSizes function
 
 	function drawGraphic(width, height) {
-        formatNumber = d3.format(dvc.essential.formatNumber),
+    formatNumber = d3.format(dvc.essential.formatNumber),
 		atTop=true,
 		level = 0,
 		levelArray = Array(level);
-		
-	    var ratiovar = dvc.optional.ratiovar;
 
-		 x = d3.scale.linear()
-			.domain([0, width])
-			.range([0, width]);
-	
-		 y = d3.scale.linear()
-			.domain([0, height])
-			.range([0, height]);
-	
+    var ratiovar = dvc.optional.ratiovar;
+
+  	x = d3.scale.linear()
+  		.domain([0, width])
+  		.range([0, width]);
+
+  	y = d3.scale.linear()
+  		.domain([0, height])
+  		.range([0, height]);
+
 		treemap = d3.layout.treemap()
 			.children(function(d, depth) { return depth ? null : d._children; })
 			.sort(function(a, b) { return a.size - b.size; })
 			.ratio(height / width * ratiovar * (1 + Math.sqrt(5)))
 			.value(function(d) { return d.size; })
 			.round(false);
-	
-		 svg = d3.select("#graphic")
+
+		svg = d3.select("#graphic")
 			.append("svg")
 			.attr("id", "chart")
 			.attr("width", width + margin.left + margin.right)
@@ -363,8 +377,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 			.append("g")
 			.attr("id", "tree");
-	
-		 grandparent = svg.append("g")
+
+		grandparent = svg.append("g")
 			.attr("class", "grandparent")
 			.append("rect")
 			.attr("id", "gparent")
@@ -373,15 +387,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			.attr("height", margin.top);
 
 
-		d3.csv(dvc.essential.graphic_data_url, function(data){	
-			
+		d3.csv(dvc.essential.graphic_data_url, function(data){
+
 			data.forEach(function(d) {
 				d.size = Number(d.size);
 				d.realsize = Number(d.realsize);
 			});
-		
+
 			treedata = data
-	
+
 			var tree = DataStructures.Tree.createFromFlatTable(data),
 			   root = tree.toSimpleObject(function(objectToDecorate, originalNode) {
 					objectToDecorate.size = originalNode.size;
@@ -391,29 +405,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 					return objectToDecorate;
 				});
 
-	
+
 			 dataset = root;
 			 initialize(root);
 			 accumulate(root);
 			 layout(root);
 			 display(root);
-		
+
 		d3.select("#blurb").select("#txt2").html(dvc.essential.totalLabel)
 		d3.select("#blurb").select("#txt3").html(function(){
 			if(treedata[0].percent == "null"){
-				return dvc.essential.prefix+formatNumber(treedata[0].realsize)+dvc.essential.suffix 
+				return dvc.essential.prefix+formatNumber(treedata[0].realsize)+dvc.essential.suffix
 			} else {
 				return dvc.essential.prefix+formatNumber(treedata[0].realsize)+dvc.essential.suffix + " ("+treedata[0].percent+"%)"
 			}
 		});
-		
-		
-	
-		
+
+
+
+
 		}); //end treemap csv load
 
 
-		//create link to source				
+		//create link to source
 		d3.select("#footer").append("p")
 			.text("Source: "+dvc.essential.sourceText);
 	 } //end drawGraphic function
@@ -422,7 +436,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       function initialize(root) {
         root.x = root.y = 0;
         root.dx = width;
-	    root.dy = height;
+	      root.dy = height;
         root.depth = 0;
       } //end initialize function
 
@@ -431,7 +445,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       // We also take a snapshot of the original children (_children) to avoid
       // the children being overwritten when when layout is computed.
       function accumulate(d) {
-		
+
         return (d._children = d.children)
             ? d.size = d.children.reduce(function(p, v) { return p + accumulate(v); }, 0)
             : d.size;
@@ -463,35 +477,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       } // end layout function
 
 function display(d) {
-
+  console.log("display",d)
 	grandparent
 		.datum(d.parent)
 		.on("click", transition)
 	//            .select("text")
 	//            .text(desc(d))
-	
+
 	d3.select("#titleText")
 		.datum(d.parent)
 	   // .text(desc(d))
-	
+
 	var g1 = svg.insert("g", ".grandparent")
 		.datum(d)
 		.attr("class", "depth")
 		//.on("mouseout", leave_tree);
-	
+
 	var g = g1.selectAll("g")
 		.data(d._children)
 	  .enter().append("g");
-	
+
 	g.filter(function(d) { return d._children; })
 		.classed("children", true)
 		.on("click", transition);
-	
+
 	g.selectAll(".child")
 		.data(function(d) { return d._children || [d]; })
 	  .enter().append("rect")
 		.attr("class", "child")
 		.attr("code",function(d) { return d.id} )
+    .attr("level",function(d){ return d.id.split("_").length})
 		.attr("desc",function(d) { return d.name} )
 		.attr("id",function(d) { return d.id} )
 		.attr("vals",function(d) {return d.size} )
@@ -500,7 +515,7 @@ function display(d) {
 		.on("mouseover", mouseover)
 		.on("mouseout", mouseout)
 		.call(rect);
-	
+
 	g.append("rect")
 		.attr("class", "parent")
 		.attr("desc",function(d) { return d.name} )
@@ -511,92 +526,119 @@ function display(d) {
 		.on("mouseover", mouseover)
 		.on("mouseout", mouseout)
 		.call(rect);
-	
+
 	g.append("text")
 		.attr("class", "parentLabels")
-		.attr("dy", "1em")
+		.attr("dy", "1.15em")
 		.text(function(d){
 			if(d.percent == "null"){
-				return d.name+": "+dvc.essential.prefix+formatNumber(d.realsize)+dvc.essential.suffix  
+				return d.name
 			} else {
-				return d.name+": "+dvc.essential.prefix+formatNumber(d.realsize)+dvc.essential.suffix + " ("+d.percent+"%)"
+				return d.name
 			}
 		})
-		.call(resize)
-		.call(text);
-		
+    .style("font-weight",700)
+    .style("font-size","16px")
+    .call(putTheTitleBack)
+		.call(text)
+    .call(doesTheTitleNeedEllipses)
+    .call(shallIJustGetRidOfTheEllipsis);
+
+  g.append("text")
+		.attr("class", "parentLabels2")
+		.attr("dy", "1.15em")
+		.text(function(d){
+			if(d.percent == "null"){
+				return dvc.essential.prefix+formatNumber(d.realsize)+dvc.essential.suffix
+			} else {
+				return dvc.essential.prefix+formatNumber(d.realsize)+dvc.essential.suffix + " ("+d.percent+"%)"
+			}
+		})
+    .style("font-size","16px")
+    .call(putTheTextBack)
+		.call(text)
+    .call(moveText)
+    .call(doYouNeedEllipses)
+    .call(shallIJustGetRidOfTheEllipsis);
+
+
 	function transition(d) {
-		console.log(d3.select(this).attr("id"));
 		if(d3.select(this).attr("id") != "gparent"){
-			
+
 			selectedArray.push(d3.select(this).select('.parent').attr("id"))
 			selectedView = selectedArray.join().replace(/,/g , "/")
-	
+
 			if(history.pushState){
 				history.pushState(null, null, encodeURI("#"+selectedView))
 			} else {
 				window.location.hash = encodeURI("#"+selectedView);
 			}
-	
+
 		} else {
 					selectedArray.splice(-1,1)
 					selectedView = selectedArray.join().replace(/,/g , "/")
-	
+
 					if(history.pushState){
 						history.pushState(null, null, encodeURI("#"+selectedView))
 					} else {
 						window.location.hash = encodeURI("#"+selectedView);
-					}	
+					}
 		}
 	if(selectedArray.length == 0){
 		d3.select("#topBtn").style("visibility", "hidden");
 		d3.select("#upBtn").style("visibility", "hidden");
-					
+
 	} else {
 		d3.select("#topBtn").style("visibility", "visible");
 		d3.select("#upBtn").style("visibility", "visible");
 	}
-	
+
 		  if (transitioning || !d) return;
 		  transitioning = true;
-		
+
 		  var g2 = display(d),
 			  t1 = g1.transition().duration(400),
 			  t2 = g2.transition().duration(400);
-		
+
 		  // Update the domain only after entering new elements.
 		  x.domain([d.x, d.x + d.dx]);
 		  y.domain([d.y, d.y + d.dy]);
-		
+
 		  // Enable anti-aliasing during the transition.
 		  svg.style("shape-rendering", null);
-		
+
 		  // Draw child nodes on top of parent nodes.
 		  svg.selectAll(".depth").sort(function(a, b) { return a.depth - b.depth; });
-		
+
 		  // Fade-in entering text.
 		  g2.selectAll("text").style("fill-opacity", 0);
-			
+
 		  // Transition to the new view.
 		  t1.selectAll("rect").call(rect);
 		  t1.selectAll("text").call(text).style("fill-opacity", 1);
 		 //t1.selectAll(".childLabels").call(text).style("fill-opacity",1);
 		  t1.selectAll(".parentLabels").call(text).style("fill-opacity",1);
-		
+      t1.selectAll(".parentLabels2").call(text).style("fill-opacity",1);
+
+
 		  t2.selectAll("rect").call(rect);
-		  t2.selectAll("text").call(resize).call(text).style("fill-opacity", 1);
+		  t2.selectAll("text").call(text).call(moveText).style("fill-opacity", 1);
 		//t2.selectAll(".childLabels").call(text).call(resize2).style("fill-opacity", 1);
-		  t2.selectAll(".parentLabels").call(resize).call(text).style("fill-opacity", 1);
-		
-		
+		  t2.selectAll(".parentLabels").call(putTheTitleBack).call(text)
+      .call(doesTheTitleNeedEllipses).call(shallIJustGetRidOfTheEllipsis)
+      .style("fill-opacity", 1);
+      t2.selectAll(".parentLabels2").call(putTheTextBack).call(moveText).call(text).call(doYouNeedEllipses).call(shallIJustGetRidOfTheEllipsis).style("fill-opacity", 1);
+
+      // g2.selectAll(".parentLabels").call(doesTheTitleNeedEllipses)
+
 		  // Remove the old node when the transition is finished.
 		  t1.remove().each("end", function() {
 			svg.style("shape-rendering", "crispEdges");
 			transitioning = false;
 		  });
-		
+
 			myClass = $(this).attr("class");
-	
+
 		if(myClass=="children"){
 			level = level+1;
 			levelArray = Array(level);
@@ -604,27 +646,48 @@ function display(d) {
 			level = level-1;
 			levelArray = Array(level);
 		}
-		
+
 	} //end transition function
-	
 	return g;
-	
-	g.each( function(d,i) {
-		d3.selectAll(".children").selectAll("text")
-			.data(d._children).enter().append("text")
-			.attr("class", "childLabels")
-			.attr("dy", "0.5em")
-			.text(function(d){ return d.name;});
-	})
+
 } //end display function
 
-function resize(text, width){
+d3.select("#upBtn").on('click', function() {
+		simulateClick(grandparent[0][0]);
+});
+
+d3.select("#topBtn").on('click', function() {
+		backToTop();
+});
+
+setTimeout( function(){
+		var url = decodeURI(window.location.hash);
+		selectedArray = []
+		if (url == ""){
+			selectedView = "c0"
+		} else {
+			params = url.split("/");
+			params[0] = params[0].replace("#", "")
+			storyArray = params;
+			selectedView = storyArray.join().replace(/,/g , "/")
+			$(storyArray).each(function(i){
+				setTimeout(function(){
+					storyId = "#"+storyArray[i];
+					simulateClick(d3.select(storyId)[0][0]);
+				}, 760*i);
+			});
+		}
+}, 700)
+
+function moveText(text, width){
 	text.each(function(d,i) {
-		var text = d3.select(this).style("font-size", function(d) {
-				return Math.sqrt((d.widthCalc*d.heightCalc))/ Math.log(this.getComputedTextLength())*0.45 + "px";
-		})
+		//var text = d3.select(this).style("font-size", "16px")//function(d) {
+				//return Math.sqrt((d.widthCalc*d.heightCalc))/ Math.log(this.getComputedTextLength())*0.45 + "px";
+		//})
+    var bbox = d3.select(this.parentNode).select(".parentLabels")[0][0].getBBox()
+    var text = d3.select(this).attr("y",y(d.y)+bbox.height+6)
 	});
-}; //end resize function
+}
 
 function text(text, width) {
 	text.each(function(d,i) {
@@ -634,7 +697,7 @@ function text(text, width) {
 			line = [],
 			y = text.attr("y"),
 			dy = parseFloat(text.attr("dy")),
-			tspan = text.text(null).append("tspan")/*.attr("x", 0).attr("y", y)*/.attr("dy",  "1em");
+			tspan = text.text(null).append("tspan").attr("x", function(d) { return x(d.x) + 6; }).attr("dy",  "1.15em");
 
 		while (word = words.pop()) {
 		  line.push(word+" ");
@@ -645,7 +708,7 @@ function text(text, width) {
 			tspan.text(line.join(" "));
 			line = [word+" "];
 
-			tspan = text.append("tspan").attr("x", function(d) { return x(d.x) + 6; }).attr("dy",  dy + "em").text(word+" ");
+			tspan = text.append("tspan").attr("x", function(d) { return x(d.x) + 6; }).attr("dy",  dy + "em").text(word+"");
 
 		  }
 		 }
@@ -653,8 +716,130 @@ function text(text, width) {
 
 	d3.selectAll(".parentLabels")
 		.attr("y", function(d) { return y(d.y) + 6; })
-		.attr("x", function(d) { return x(d.x) + 6; });
+		.attr("x", function(d) { return x(d.x) + 8; });
+  //
+  d3.selectAll(".parentLabels2")
+	// 	.attr("y", function(d) { return y(d.y) + 26; })
+		.attr("x", function(d) { return x(d.x) + 8; });
 } // end text function
+
+function putTheTextBack(text){
+  text.each(function(d,i){
+    var text = d3.select(this)
+      text.text(function(d){
+      	if(d.percent == "null"){
+      		return dvc.essential.prefix+formatNumber(d.realsize)+dvc.essential.suffix
+      	} else {
+      		return dvc.essential.prefix+formatNumber(d.realsize)+dvc.essential.suffix + " ("+d.percent+"%)"
+      	}
+      })
+  })
+}
+
+function doYouNeedEllipses(text){
+  text.each(function(d,i){
+    var text = d3.select(this)
+    var parentText = d3.select(this.parentNode).select(".parentLabels")
+    switch(parentText.text().length){
+      case 0:
+        text.text("…")
+        break;
+      default:
+        text.each(function(d,i){
+          var text = d3.select(this)
+          var bottomEdge = y(d.y)+d.heightCalc
+          var bbox = text[0][0].getBBox()
+          if(bbox.y+bbox.height>bottomEdge){
+            text.text("…")
+          }
+        })
+        break;
+    }
+  })
+
+
+
+
+}
+
+function shallIJustGetRidOfTheEllipsis(text){
+  text.each(function(d,i){
+    var text = d3.select(this)
+    var text = d3.select(this)
+    var bottomEdge = y(d.y)+d.heightCalc
+    var rightEdge = x(d.x)+d.widthCalc
+    var bbox = text[0][0].getBBox()
+    if(bbox.y+bbox.height>bottomEdge||bbox.x+bbox.width>rightEdge){
+      text.text("")
+    }
+  })
+}
+
+function putTheTitleBack(text){
+  text.each(function(d,i){
+    var text = d3.select(this)
+      text.text(function(d){
+        if(d.percent == "null"){
+          return d.name
+        } else {
+          return d.name
+        }
+      })
+  })
+}
+
+function doesTheTitleNeedEllipses(text){
+  text.each(function(d,i){
+    var text = d3.select(this)
+    var bottomEdge = y(d.y)+d.heightCalc
+    var rightEdge = x(d.x)+d.widthCalc
+    var bbox = text[0][0].getBBox()
+    //if text goes outside the box
+    if(bbox.x+bbox.width>rightEdge||bbox.y+bbox.height>bottomEdge){
+      //first get rid of the extra spaces
+      var words = text.text().replace("  "," ").replace("  "," ").split(" ")
+      switch (words.length){
+        case 1://if just one word, start chopping off letters
+          if(bbox.x+bbox.width>rightEdge&&bbox.y+bbox.height>bottomEdge){
+            text.text("");
+            break;
+          }else{
+            if(words[0]=="…"){
+              break;
+            }else{
+              if(bbox.x+bbox.width>rightEdge||bbox.y+bbox.height>bottomEdge){
+                while (bbox.x+bbox.width>rightEdge||bbox.y+bbox.height>bottomEdge) {
+                  var letters = text.text().split("")
+                  var shorterLetters = letters.slice(0,letters.length-2)
+                  text.text(shorterLetters.join("")+"…")
+                  var bbox=text[0][0].getBBox()
+                }
+                break;
+              }else{
+                break;
+              }
+            }
+          }
+        default://else start chopping off words
+          if(bbox.x+bbox.width>rightEdge&&bbox.y+bbox.height>bottomEdge){
+            //if the text is both outside the box in both x and y direction just make the title blank
+            text.text("")
+            break;
+          }else{
+               for(i=0;i<words.length;i++){
+                 if(bbox.x+bbox.width>rightEdge||bbox.y+bbox.height>bottomEdge) {
+                      var words = text.text().replace("  "," ").replace("  "," ").split(" ")
+                      var shorter = words.slice(0,words.length-1)
+                      text.text(shorter.join(" ")+"…")
+                      var bbox=text[0][0].getBBox()
+                 }
+               }
+           break;
+          }
+      }//end switch
+    }//ends if text outside box
+  })//end text.each
+}//end doesTheTitleNeedEllipses
 
 
 function rect(rect) {
@@ -662,7 +847,7 @@ function rect(rect) {
 		.attr("y", function(d) { return y(d.y); })
 		.attr("width", function(d) {
 			   widthCalc = x(d.x + d.dx) - x(d.x);
-	
+
 			  d["widthCalc"] = widthCalc;
 			  return widthCalc;
 		})
@@ -671,22 +856,15 @@ function rect(rect) {
 			 d["heightCalc"] = heightCalc;
 			  return heightCalc;
 		})
-	
+
 		if (pymChild) {
 				pymChild.sendHeight();
 		}
 }
 
-//      function desc(d) {
-//		return d.parent
-//            ? desc(d.parent) + " > " + d.desc
-//            : d.desc;
-//      }
-
-
 function mouseover (d){
 	var	selectClass = $(this).attr('desc');
-	var	selectValue = $(this).attr('realvals');	
+	var	selectValue = $(this).attr('realvals');
 	var	selectPercent = $(this).attr('percent');
 
 	d3.select("#blurb").select("#txt2").html(selectClass+":")
@@ -695,7 +873,7 @@ function mouseover (d){
 			return " £"+formatNumber(selectValue)+dvc.essential.suffix
 		} else {
 			return " £"+formatNumber(selectValue)+dvc.essential.suffix+" ("+ selectPercent+"%)"
-		}	
+		}
 	})
 };
 
@@ -725,35 +903,6 @@ function simulateClick(elem /* Must be the element */) {
 	elem.dispatchEvent(evt);
 }
 
-d3.select("#upBtn").on('click', function() {
-		simulateClick(grandparent[0][0]);
-
-});
-
-d3.select("#topBtn").on('click', function() {
-		backToTop();
-});
-
-setTimeout( function(){
-		var url = decodeURI(window.location.hash);
-		selectedArray = []
-		if (url == ""){
-			selectedView = "c0"
-		} else {
-			params = url.split("/");
-			params[0] = params[0].replace("#", "")
-			storyArray = params;
-			selectedView = storyArray.join().replace(/,/g , "/")
-			
-			$(storyArray).each(function(i){
-				setTimeout(function(){
-					storyId = "#"+storyArray[i];
-					simulateClick(d3.select(storyId)[0][0]);						
-				}, 760*i);
-			});
-		}
-}, 700)
-
 function backToTop (){
 	$(levelArray).each(function(i){
 		setTimeout(function(){
@@ -762,12 +911,12 @@ function backToTop (){
 	});
 };
 
-//check whether browser can cope with svg	
+//check whether browser can cope with svg
 if (Modernizr.svg) {
-	//load config 
+	//load config
 	d3.json("config.json", function(error, config) {
 		dvc=config
-	
+
 		//use pym to create iframed chart dependent on specified variables
 		pymChild = new pym.Child({ renderCallback: getSizes});
 	}) //end load config
